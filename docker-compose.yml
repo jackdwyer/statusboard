@@ -1,0 +1,44 @@
+version: '3'
+services:
+  redis:
+    image: redis
+  mta-service-status-worker:
+    image: mta-service-status:latest
+    command: python worker.py
+    depends_on:
+      - redis
+  mta-service-status-web:
+    image: mta-service-status:latest
+    command: python app.py
+    depends_on:
+      - redis
+    ports:
+      - "5002:80"
+  mta-static-web:
+    image: static-mta
+    command: python app.py
+    ports:
+      - "5001:80"
+  statusboard-ui:
+    image: statusboard-ui
+    ports: 
+      - "8080:80"
+    depends_on:
+      - mta-service-status-web
+      - mta-static-web
+      - weather-web
+  weather-web:
+    env_file: statusboard.env
+    image: weather
+    command: python app.py
+    ports:
+      - "5003:80"
+    depends_on:
+      - redis
+      - weather-worker
+  weather-worker:
+    env_file: statusboard.env
+    image: weather
+    command: python worker.py
+    depends_on:
+      - redis

@@ -1,0 +1,11 @@
+[Unit]
+Description=start status board
+
+[Service]
+WorkingDirectory=/home/h/statusboard
+ExecStart=/usr/local/bin/docker-compose up
+ExecStop=/usr/local/bin/docker-compose stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

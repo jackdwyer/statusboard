@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/h/statusboard/contrib/start_statusboard_kiosk.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=statusboard kiosk mode
+Name=statusboard kiosk mode
+Comment[en_US]=
+Comment=

@@ -1,0 +1,5 @@
+mta-static/google_transit*
+mta-static/schedule.pki
+venv-*
+.envrc
+statusboard.env

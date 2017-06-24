@@ -1,0 +1,142 @@
+<!DOCTYE html>
+<html lang="en">
+  <head>
+    <title>MTA UI</title>
+  
+    <meta charset="utf-8">
+    <meta name="author" content="Jack Dwyer">
+
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <script src="dist/js/mustache.min.js"></script>
+    <link rel="stylesheet" href="dist/css/normalize.css">
+    <link rel="stylesheet" href="dist/css/skeleton.css">
+    <style>
+      hr {
+        margin: 10px;
+        border: none;
+        height: 1px;
+        background-color: #c1cdcd;
+      }
+      .container {
+        margin-top: 10px;
+        margin-left: 10px;
+        width: 768px;
+      }
+      .nomargin {
+        margin: 0px;
+      }
+      .big {
+        font-size: 300%;
+        margin: auto;
+      }
+      .notasbig {
+        font-size: 200%;
+        padding-top: 10px;
+        margin: auto;
+      }
+      .left-border {
+        border-left-style: solid;
+      }
+      #clock {
+        font-weight: 800;
+      }
+      #errors {
+        background-color: red;
+      }
+      #italic {
+        font-style: italic;
+      }
+      #footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="errors" class="row">
+      </div>
+      <div class="row">
+        <div class="seven columns">
+          <h1>northbound</h1> 
+        </div>
+        <div class="five columns">
+          <h1 id="clock"></h1>
+        </div>
+      </div>
+      <hr>
+      <div id="265">
+      </div>
+      <div id="G30">
+      </div>
+      <div id="footer">
+      </div>
+    </div>
+
+    <script id="weatherTemplate" type="x-tmpl-mustache">
+      <div class="row">
+        <div class="four columns">
+          <p class="big">{{ current }} °C</p>
+        </div>
+        <div class="four columns">
+          <p class="notasbig"><i>{{ max }}°C / {{ min }}°C</i></p>
+        </div>
+        <div class="four columns">
+          {{#icons}}
+            <img width="100" height="100" src="http://localhost:5003/static/{{.}}.png"></img>
+          {{/icons}}
+        </div>
+      </div>
+    </script>
+
+    <script id="tripsTemplate" type="x-tmpl-mustache">
+      {{#.}}
+      <div class="row">
+        <div class="one column">
+          <img src="static/{{ image }}">
+        </div>
+        <div class="five columns">
+          <p class="big"><strong>{{ minutesAway }} min</strong></p>
+        </div>
+        {{#serviceStatus}}
+        <div class="six columns left-border">
+          <p class="notasbig">&nbsp {{ serviceStatus }}</p>
+        </div>
+        {{/serviceStatus}}
+        {{#lastUpdated}}
+        <div class="six columns left-border">
+            <p>&nbsp {{ lastUpdated }}</p>
+        </div>
+        {{/lastUpdated}}
+      </div>
+      {{/.}}
+      <hr>
+    </script>
+    <script id="errorTemplate" type="x-tmpl-mustache">
+      {{#error}}
+      <p>{{ error }}</p>
+      {{/error}}
+    </script>
+  </body>
+</html>
+<script src="statusboard.js"></script>
+<script>
+
+  clock();
+  getServiceStatus();
+  getTrips();
+  getCurrentWeather();
+
+  window.setInterval(function(){
+    clock();
+  }, 1000);
+
+  window.setInterval(function(){
+    getTrips();
+    getServiceStatus();
+    getCurrentWeather();
+    checkForErrors();
+  }, 10000);
+
+</script>

@@ -1,0 +1,10 @@
+[Unit]
+Description=python mixup that reads serial and sets the screen brightness
+
+[Service]
+WorkingDirectory=/home/h/statusboard/brightness-control/
+ExecStart=/usr/bin/python /home/h/statusboard/brightness-control/dimmer.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

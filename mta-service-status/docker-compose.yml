@@ -1,0 +1,16 @@
+version: '3'
+services:
+  redis:
+    image: redis
+  worker:
+    image: mta-service-status:latest
+    command: python worker.py
+    depends_on:
+      - redis
+  web:
+    image: mta-service-status:latest
+    command: python app.py
+    ports:
+      - "5001:5000"
+    depends_on:
+      - redis
