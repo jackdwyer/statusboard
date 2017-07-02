@@ -1,4 +1,4 @@
-REALTIME_URL = "http://mta.thundercloud.club/by-id/"
+REALTIME_URL = "https://api.wheresthefuckingtrain.com/by-id/"
 STATIC_URL = "http://localhost:5001/"
 STATUS_URL = "http://localhost:5002/"
 WEATHER_URL = "http://localhost:5003/"
@@ -60,11 +60,13 @@ function getRealTimeLine(subwayLine) {
           train['minutesAway'] = minAway
           trips.push(train);
         }
-        try {
-          trips[0]['serviceStatus'] = subwayStatus.data['L'];
-          errors["status_L"] = ""
-        } catch (e) {
-          errors["status_L"] = "Failed to get L status"
+        if (trips.length > 0) {
+          try {
+            trips[0]['serviceStatus'] = subwayStatus.data['L'];
+            errors["status_L"] = ""
+          } catch (e) {
+            errors["status_L"] = "Failed to get L status"
+          }
         }
       }
       renderLine(subwayLine, trips);
@@ -92,11 +94,13 @@ function getStaticSchedule(subwayLine) {
           train['minutesAway'] =  minAway
           trips.push(train);
         }
-        try {
-          trips[0]['serviceStatus'] = subwayStatus.data['G'];
-          errors["status_G"] = ""
-        } catch (e) {
-          errors["status_G"] = "Failed to get G status"
+        if (trips.length > 0) {
+          try {
+            trips[0]['serviceStatus'] = subwayStatus.data['G'];
+            errors["status_G"] = ""
+          } catch (e) {
+            errors["status_G"] = "Failed to get G status"
+          }
         }
         renderLine(subwayLine, trips);
       }
@@ -143,7 +147,6 @@ function getCurrentWeather() {
 // }
 
 function renderCurrentTemp(obj) {
-  console.log(obj);
   var template = $('#weatherTemplate').html();
   Mustache.parse(template)
   var rendered = Mustache.render(template, obj);
@@ -167,7 +170,7 @@ function checkForErrors() {
 }
 
 function getTrips() {
-  getRealTimeLine("265");
+  getRealTimeLine("5194");
   getStaticSchedule("G30");
 }
 

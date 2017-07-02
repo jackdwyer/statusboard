@@ -17,3 +17,6 @@ deploy:
 
 reload-services:
 	./deploy/reload-services.sh
+
+run: build
+	docker-compose up

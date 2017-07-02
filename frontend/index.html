@@ -26,8 +26,13 @@
         margin: 0px;
       }
       .big {
-        font-size: 300%;
+        font-size: 500%;
         margin: auto;
+      }
+      .prettybig {
+        font-size: 400%;
+        margin: 0px;
+        padding: 0px;
       }
       .notasbig {
         font-size: 200%;
@@ -36,6 +41,9 @@
       }
       .left-border {
         border-left-style: solid;
+      }
+      .paddin {
+        padding-top: 25px;
       }
       #clock {
         font-weight: 800;
@@ -66,7 +74,7 @@
         </div>
       </div>
       <hr>
-      <div id="265">
+      <div id="5194">
       </div>
       <div id="G30">
       </div>
@@ -77,7 +85,7 @@
     <script id="weatherTemplate" type="x-tmpl-mustache">
       <div class="row">
         <div class="four columns">
-          <p class="big">{{ current }} °C</p>
+          <p class="prettybig">{{ current }} °C</p>
         </div>
         <div class="four columns">
           <p class="notasbig"><i>{{ max }}°C / {{ min }}°C</i></p>
@@ -94,7 +102,7 @@
       {{#.}}
       <div class="row">
         <div class="one column">
-          <img src="static/{{ image }}">
+          <img class="paddin" src="static/{{ image }}">
         </div>
         <div class="five columns">
           <p class="big"><strong>{{ minutesAway }} min</strong></p>
